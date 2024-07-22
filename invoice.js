@@ -8,33 +8,33 @@ function ready(fn) {
 
 function addDemo(row) {
   if (!row.Issued && !row.Due) {
-    for (const key of ['Number', 'Issued', 'Due']) {
+    for (const key of ['Codigo', 'Issued', 'Due']) {
       if (!row[key]) { row[key] = key; }
     }
     for (const key of ['Subtotal', 'Deduction', 'Taxes', 'Total']) {
       if (!(key in row)) { row[key] = key; }
     }
-    if (!('Note' in row)) { row.Note = '(Anything in a Note column goes here)'; }
+    if (!('Nota' in row)) { row.Nota = '(Anything in a Nota column goes here)'; }
   }
-  if (!row.Invoicer) {
-    row.Invoicer = {
-      Name: 'Invoicer.Name',
-      Street1: 'Invoicer.Street1',
-      Street2: 'Invoicer.Street2',
-      City: 'Invoicer.City',
+  if (!row.Autor) {
+    row.Autor = {
+      Name: 'Autor.Name',
+      Street1: 'Autor.Street1',
+      Street2: 'Autor.Street2',
+      City: 'Autor.City',
       State: '.State',
       Zip: '.Zip',
-      Email: 'Invoicer.Email',
-      Phone: 'Invoicer.Phone',
-      Website: 'Invoicer.Website'
+      Email: 'Autor.Email',
+      Phone: 'Autor.Phone',
+      Website: 'Autor.Website'
     }
   }
-  if (!row.Client) {
-    row.Client = {
-      Name: 'Client.Name',
-      Street1: 'Client.Street1',
-      Street2: 'Client.Street2',
-      City: 'Client.City',
+  if (!row.Motorista) {
+    row.Motorista = {
+      Name: 'Motorista.Name',
+      Street1: 'Motorista.Street1',
+      Street2: 'Motorista.Street2',
+      City: 'Motorista.City',
       State: '.State',
       Zip: '.Zip'
     }
@@ -68,7 +68,7 @@ const data = {
 };
 let app = undefined;
 
-Vue.filter('currency', formatNumberAsUSD)
+Vue.filter('currency', formatNumberAsBRL)
 function formatNumberAsUSD(value) {
   if (typeof value !== "number") {
     return value || '—';      // falsy value would be shown as a dash.
@@ -78,6 +78,21 @@ function formatNumberAsUSD(value) {
 
   const result = value.toLocaleString('en', {
     style: 'currency', currency: 'USD'
+  })
+  if (result.includes('NaN')) {
+    return value;
+  }
+  return result;
+}
+function formatNumberAsBRL(value) {
+  if (typeof value !== "number") {
+    return value || '—';      // falsy value would be shown as a dash.
+  }
+  value = Math.round(value * 100) / 100;    // Round to nearest cent.
+  value = (value === -0 ? 0 : value);       // Avoid negative zero.
+
+  const result = value.toLocaleString('pt-br', {
+    style: 'currency', currency: 'BRL'
   })
   if (result.includes('NaN')) {
     return value;
@@ -134,6 +149,7 @@ function prepareList(lst, order) {
 }
 
 function updateInvoice(row) {
+  console.log(row)
   try {
     data.status = '';
     if (row === null) {
@@ -151,7 +167,7 @@ function updateInvoice(row) {
     // Add some guidance about columns.
     const want = new Set(Object.keys(addDemo({})));
     const accepted = new Set(['References']);
-    const importance = ['Number', 'Client', 'Items', 'Total', 'Invoicer', 'Due', 'Issued', 'Subtotal', 'Deduction', 'Taxes', 'Note'];
+    const importance = ['Codigo', 'Motorista', 'Items', 'Total', 'Invoicer', 'Due', 'Issued', 'Subtotal', 'Deduction', 'Taxes', 'Nota'];
     if (!(row.Due || row.Issued)) {
       const seen = new Set(Object.keys(row).filter(k => k !== 'id' && k !== '_error_'));
       const help = row.Help = {};
@@ -232,7 +248,7 @@ ready(function() {
   });
 
   if (document.location.search.includes('demo')) {
-    updateInvoice(exampleData);
+    updateInvoice(exampleData2);
   }
   if (document.location.search.includes('labels')) {
     updateInvoice({});

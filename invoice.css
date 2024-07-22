@@ -36,7 +36,7 @@ body {
   display: block;
 }
 
-.client, .items, .summary {
+.motorista, .viagens, .summary {
   padding: 1px;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -45,37 +45,37 @@ body {
   color-adjust: exact !important;
 }
 
-.client .title, .summary .title {
+.motorista .title, .summary .title {
   margin-left: 4px;
   color: white;
   text-transform: uppercase;
 }
 
-.client .details, .summary .details {
+.motorista .details, .summary .details {
   padding: 4px;
   background-color: var(--grist-theme-page-panels-main-panel-bg, white);
 }
 
-table.items {
+table.viagens {
   width: 100%;
   border: 1px solid #ff8000;
   border-collapse: collapse;
 }
 
-table.items th {
-  text-align: left;
+table.viagens th {
+  text-align: right;
   color: white;
   text-transform: uppercase;
   font-weight: normal;
   padding: 4px;
 }
 
-table.items td {
+table.viagens td {
   background-color: var(--grist-theme-page-panels-main-panel-bg, white);
   padding: 4px;
 }
 
-.client .title, .summary .title, table.items th, .help .title {
+.motorista .title, .summary .title, table.viagens th, .help .title {
   padding-top: 10px;
   padding-bottom: 10px;
 }

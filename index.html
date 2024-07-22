@@ -12,6 +12,7 @@
 
     <script src="invoice.js?ver=11"></script>
     <script src="exampleData.js"></script>
+    <script src="exampleData2.js"></script>
 
     <link rel="stylesheet" href="invoice.css?ver=17">
   </head>
@@ -35,32 +36,39 @@
           {{ status }}
         </template>
       </div>
+
+
+
       <template v-if="invoice">
         <div class="top">
+
+
           <div class="block">
             <div class="header">
-              <div class="meta title">Invoice</div>
+              <div class="meta title">Recibo</div>
             </div>
-            <div class="info"><span class="meta">Invoice Number</span> #{{ invoice.Number }}</div>
-            <div class="info" v-if="invoice.Issued"><div class="meta date-tag">Issued</div> {{ invoice.Issued | asDate }}</div>
-            <div class="info" v-if="invoice.Due"><div class="meta date-tag">Due</div> {{ invoice.Due | asDate }}</div>
+            <div class="info"><span class="meta">Recibo Numero</span> #{{ invoice.Codigo }}</div>
+            <div class="info" v-if="invoice.Emissao"><div class="meta date-tag">Emissão</div> {{ invoice.Emissao | asDate }}</div>
+            <!-- <div class="info" v-if="invoice.Due"><div class="meta date-tag">Due</div> {{ invoice.Due | asDate }}</div> -->
           </div>
           
+
+
           <div class="supplier">
-            <div v-for="business in (invoice.Invoicer ? [invoice.Invoicer] : [])">
+            <div v-for="business in (invoice.Autor ? [invoice.Autor] : [])">
               <template v-if="typeof(business) === 'string'">
                 <div class="address newlined">{{ business }}</div>
               </template>
               <template v-else>
                 <div class="address">
-                  <span class="name">{{ business.Name }}</span><br />
-                  {{ business.Street1 }}<br />
-                  <template v-if="business.Street2">
+                  <span class="name">{{ business.Empresa }}</span><br />
+                  {{ business.Endereco }}<br />
+                  <!-- <template v-if="business.Street2">
                     {{ business.Street2 }}<br />
-                  </template>
-                  {{ business.City }} {{ business.State }} {{ business.Zip }}<br />
-                  <template v-if="business.Country">
-                    {{ business.Country }}<br />
+                  </template> -->
+                  {{ business.Cidade }} {{ business.Estado }} {{ business.CEP }}<br />
+                  <template v-if="business.Pais">
+                    {{ business.Pais }}<br />
                   </template>
                 </div>
                 <template v-if="business.Email">
@@ -77,54 +85,92 @@
           </div>
         </div>
         
-        <div class="client" v-for="business in (invoice.Client ? [invoice.Client] : [])">
-          <div class="title">Client</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="motorista" v-for="funcionario in (invoice.Motorista ? [invoice.Motorista] : [])">
+          <div class="title">Motorista</div>
           <div class="details">
-            <template v-if="typeof(business) === 'string'">
-              <div class="newlined">{{ business }}</div>
+            <template v-if="typeof(funcionario) === 'string'">
+              <div class="newlined">{{ funcionario }}</div>
             </template>
             <template v-else>
-              <div>{{ business.Name }}</div>
-              <template v-if="business.Street1">
-                {{ business.Street1 }},
+              <div>{{ funcionario.Motorista }}</div>
+              <template v-if="funcionario.Endereco">
+                {{ funcionario.Endereco }},
               </template>
-              <template v-if="business.Street2">
-                {{ business.Street2 }},
+              <template v-if="funcionario.Street2">
+                {{ funcionario.Street2 }},
               </template>
-              {{ business.City }} {{ business.State }} {{ business.Zip }}
-              <template v-if="business.Country">
-                <br />{{ business.Country }}
+              {{ funcionario.Cidade }}, {{ funcionario.Estado }}. {{ funcionario.CEP }}
+              <template v-if="funcionario.Country">
+                <br />{{ funcionario.Country }}
               </template>
             </template>
           </div>
         </div>
 
-        <table class="items">
-          <template v-if="!Array.isArray(invoice.Items)">
+
+
+
+
+
+
+
+
+
+
+        <table class="viagens">
+          <template v-if="!Array.isArray(invoice.Viagens)">
             <tr>
-              <th>Description</th>
+              <th>Descrição</th>
               <th class="money">Total</th>
             </tr>
             <tr>
-              <td>{{ invoice.Items }}</td>
-              <td class="money">{{ invoice.Total | currency }}</td>
+              <td>{{ invoice.Viagens }}</td>
+              <td class="money">{{ invoice.Valor | currency }}</td>
             </tr>
           </template>
           <template v-else>
             <tr>
-              <th>Description</th>
-              <th class="money">Unit Price</th>
-              <th class="number">Quantity</th>
+              <th>Descrição</th>
+              <th class="money">Origem</th>
+              <th class="money">Destino</th>
+              <th class="number">Peso</th>
+              <th class="money">Preco Tonelada</th>
               <th class="money">Total</th>
             </tr>
-            <tr v-for="item in invoice.Items">
-              <td>{{ item.Description }}</td>
-              <td class="money">{{ item.Price | currency }}</td>
-              <td class="number">{{ item.Quantity }}</td>
-              <td class="money">{{ item.Total | currency }}</td>
+            <tr v-for="item in invoice.Viagens">
+              <td>{{ item.Produto2 }}</td>
+              <td class="money">{{ item.Origem }}</td>
+              <td class="money">{{ item.Destino }}</td>
+              <td class="number">{{ item.Peso }}</td>
+              <td class="money">{{ item.Preco | currency }}</td>
+              <td class="money">{{ item.Valor | currency }}</td>
             </tr>
           </template>
         </table>
+
+
+
+
+
+
+
+
+
+
+
+
 
         <div class="summary">
           <div class="part">
@@ -145,14 +191,23 @@
           </div>
         </div>
 
-        <template v-if="invoice.Note">
-          <p class="note">{{ invoice.Note }}</p>
+
+
+
+
+        <template v-if="invoice.Nota">
+          <p class="Nota">{{ invoice.Nota }}</p>
         </template>
+
+
+
+
+
 
         <template v-for="help in (invoice.Help ? [invoice.Help] : [])">
           <div class="help">
             <div class="help-close">
-              Add <span class="column-name">Due</span> or <span class="column-name">Issued</span> date to hide this help.
+              Add <span class="column-name">Due</span> or <span class="column-name">Emissao</span> date to hide this help.
             </div>
             <div class="title">Column information</div>
             <div class="details">
@@ -179,6 +234,12 @@
           </div>
         </template>
 
+
+
+
+
+
+        
         <div class="footer">
           <div class="thanks">
             Thank you!
