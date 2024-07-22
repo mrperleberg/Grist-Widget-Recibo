@@ -107,12 +107,26 @@ Vue.filter('fallback', function(value, str) {
   return value;
 });
 
+moment.updateLocale('pt', {
+  months : [
+      "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
+      "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+  ]
+});
 Vue.filter('asDate', function(value) {
   if (typeof(value) === 'number') {
     value = new Date(value * 1000);
   }
   const date = moment.utc(value)
-  return date.isValid() ? date.format('MMMM DD, YYYY') : value;
+  return date.isValid() ? date.format('DD MMMM YYYY') : value;
+});
+
+Vue.filter('asDayMonth', function(value) {
+  if (typeof(value) === 'number') {
+    value = new Date(value * 1000);
+  }
+  const date = moment.utc(value)
+  return date.isValid() ? date.format('DD MMMM') : value;
 });
 
 function tweakUrl(url) {

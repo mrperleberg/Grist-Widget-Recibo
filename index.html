@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="utf-8">
     <title>Grist Invoice</title>
@@ -47,7 +47,7 @@
             <div class="header">
               <div class="meta title">Recibo</div>
             </div>
-            <div class="info"><span class="meta">Recibo Numero</span> #{{ invoice.Codigo }}</div>
+            <div class="info"><span class="meta">Numero do Recibo</span> #{{ invoice.Codigo }}</div>
             <div class="info" v-if="invoice.Emissao"><div class="meta date-tag">Emissão</div> {{ invoice.Emissao | asDate }}</div>
             <!-- <div class="info" v-if="invoice.Due"><div class="meta date-tag">Due</div> {{ invoice.Due | asDate }}</div> -->
           </div>
@@ -132,6 +132,9 @@
         <table class="viagens">
           <template v-if="!Array.isArray(invoice.Viagens)">
             <tr>
+              <th colspan="1" class="tituloTabela">Viagens</th>
+            </tr>
+            <tr>
               <th>Descrição</th>
               <th class="money">Total</th>
             </tr>
@@ -142,19 +145,57 @@
           </template>
           <template v-else>
             <tr>
-              <th>Descrição</th>
+              <th colspan="8" class="tituloTabela">Viagens</th>
+            </tr>
+            <tr>
+              <th class="descricao">Descrição</th>
               <th class="money">Origem</th>
               <th class="money">Destino</th>
+              <th class="money">DataCarregamento</th>
+              <th class="money">DataDescarga</th>
               <th class="number">Peso</th>
               <th class="money">Preco Tonelada</th>
               <th class="money">Total</th>
             </tr>
             <tr v-for="item in invoice.Viagens">
-              <td>{{ item.Produto }}</td>
+              <td class="descricao">{{ item.Produto }}</td>
               <td class="money">{{ item.Origem }}</td>
               <td class="money">{{ item.Destino }}</td>
+              <td class="money">{{ item.Data_Carga | asDayMonth }}</td>
+              <td class="money">{{ item.Data_Descarga | asDayMonth }}</td>
               <td class="number">{{ item.Peso }}</td>
               <td class="money">{{ item.Preco | currency }}</td>
+              <td class="money">{{ item.Valor | currency }}</td>
+            </tr>
+          </template>
+        </table>
+
+
+
+
+
+        
+        <table class="financas">
+          <template v-if="!Array.isArray(invoice.Financas)">
+            <tr>
+              <th class="descricao">Descrição</th>
+              <th class="money">Total</th>
+            </tr>
+            <tr>
+              <td>{{ invoice.Financas }}</td>
+              <td class="money">{{ invoice.Valor | currency }}</td>
+            </tr>
+          </template>
+          <template v-else>
+            <tr>
+              <th colspan="2" class="tituloTabela">Descontos</th>
+            </tr>
+            <tr>
+              <th class="descricao">Descrição</th>
+              <th class="money">Valor</th>
+            </tr>
+            <tr v-for="item in invoice.Financas">
+              <td class="descricao">{{ item.Descricao }}</td>
               <td class="money">{{ item.Valor | currency }}</td>
             </tr>
           </template>
@@ -178,12 +219,12 @@
             <div class="details">{{ invoice.Subtotal | currency }}</div>
           </div>
           <div class="part">
-            <div class="title">Deduction</div>
-            <div class="details">{{ invoice.Deduction | currency }}</div>
+            <div class="title">Comissao</div>
+            <div class="details">{{ invoice.Comissao | currency }}</div>
           </div>
           <div class="part">
-            <div class="title">Taxes</div>
-            <div class="details">{{ invoice.Taxes | currency }}</div>
+            <div class="title">Descontos</div>
+            <div class="details">{{ invoice.Descontos | currency }}</div>
           </div>
           <div class="total">
             <div class="title">Total</div>
@@ -242,12 +283,12 @@
         
         <div class="footer">
           <div class="thanks">
-            Thank you!
+            Obrigado!
           </div>
         </div>
 
         <div class="print">
-          <a href="javascript:window.print()">Print</a>
+          <a href="javascript:window.print()">Imprimir</a>
         </div>
       </template>
     </div>

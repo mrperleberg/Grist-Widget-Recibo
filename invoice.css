@@ -36,7 +36,7 @@ body {
   display: block;
 }
 
-.motorista, .viagens, .summary {
+.motorista, .viagens, .financas, .summary {
   padding: 1px;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -56,13 +56,14 @@ body {
   background-color: var(--grist-theme-page-panels-main-panel-bg, white);
 }
 
-table.viagens {
+table.viagens, table.financas {
   width: 100%;
   border: 1px solid #ff8000;
   border-collapse: collapse;
 }
 
-table.viagens th {
+
+table.viagens th, table.financas th {
   text-align: right;
   color: white;
   text-transform: uppercase;
@@ -70,14 +71,22 @@ table.viagens th {
   padding: 4px;
 }
 
-table.viagens td {
+table.viagens td, table.financas td {
   background-color: var(--grist-theme-page-panels-main-panel-bg, white);
   padding: 4px;
 }
 
-.motorista .title, .summary .title, table.viagens th, .help .title {
+.motorista .title, .summary .title, table.viagens th, table.financas th, .help .title {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.descricao {
+  text-align: left !important;
+}
+
+.tituloTabela {
+  text-align: center !important;
 }
 
 .money, .number {
