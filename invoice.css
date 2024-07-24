@@ -54,7 +54,7 @@ body {
 
 .motorista .details, .summary .details {
   padding: 2px;
-  background-color: var(--grist-theme-page-panels-main-panel-bg, white);
+  background-color: white;
 }
 
 table.viagens, table.financas {
@@ -73,7 +73,7 @@ table.viagens th, table.financas th {
 }
 
 table.viagens td, table.financas td {
-  background-color: var(--grist-theme-page-panels-main-panel-bg, white);
+  background-color: white;
   padding: 2px;
 }
 
