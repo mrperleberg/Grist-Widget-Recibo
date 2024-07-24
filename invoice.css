@@ -3,7 +3,7 @@ body {
   max-width: 800px;
   margin: 0 auto;
   padding: 5px;
-  font-size: 50%;
+  font-size: 70%;
 }
 
 .meta {
@@ -134,7 +134,7 @@ div.summary .total {
   display: block;
   flex-grow: 1;
   background: #0064b6;
-  font-size: 140%;
+  font-size: 120%;
 }
 
 div.summary {
