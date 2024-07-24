@@ -64,7 +64,7 @@ const exampleData2 =
 //         "Destino":"POA_Dest",
 //         "Motorista":"Marcones Perleberg",
 //         "Origem":"PEL_OEM",
-//         "Peso":1,
+//         "Toneladas":1,
 //         "Placa":"UmaPlaca",
 //         "Preco":100,
 //         "Produto2":"Clapping!",
@@ -83,7 +83,7 @@ const exampleData2 =
 //         "Destino":"RG_Dest",
 //         "Motorista":"Marcones Perleberg",
 //         "Origem":"PEL_OEM",
-//         "Peso":3,
+//         "Toneladas":3,
 //         "Placa":null,
 //         "Preco":39,
 //         "Produto2":"Bravo",
@@ -124,5 +124,5 @@ const exampleData2 =
       "Comissao":36,
       "Data_Carga":"2020-09-20T00:00:00.000Z",
       "Data_Descarga":"2020-09-23T00:00:00.000Z",
-      "Destino":"asdf","Motorista":"Marcones Perleberg","Origem":"sdfb","Peso":2,"Placa":"JAB-9D07","Preco":100,"Produto":"soja","TaxaComissao":0.18,"Valor":200,"id":4},{"CodigoRecibo":{"tableId":"Recibos","rowId":2},"Comissao":35.1,"Data_Carga":null,"Data_Descarga":null,"Destino":"","Motorista":"Marcones Perleberg","Origem":"","Peso":5,"Placa":"JAB-9D07","Preco":39,"Produto":"café","TaxaComissao":0.18,"Valor":195,"id":5}],"id":2},"Subtotal":395
+      "Destino":"asdf","Motorista":"Marcones Perleberg","Origem":"sdfb","Toneladas":2,"Placa":"JAB-9D07","Preco":100,"Produto":"soja","TaxaComissao":0.18,"Valor":200,"id":4},{"CodigoRecibo":{"tableId":"Recibos","rowId":2},"Comissao":35.1,"Data_Carga":null,"Data_Descarga":null,"Destino":"","Motorista":"Marcones Perleberg","Origem":"","Toneladas":5,"Placa":"JAB-9D07","Preco":39,"Produto":"café","TaxaComissao":0.18,"Valor":195,"id":5}],"id":2},"Subtotal":395
 };

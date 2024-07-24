@@ -151,9 +151,9 @@
               <th class="descricao">Descrição</th>
               <th class="money">Origem</th>
               <th class="money">Destino</th>
-              <th class="money">DataCarregamento</th>
-              <th class="money">DataDescarga</th>
-              <th class="number">Peso</th>
+              <th class="money">Data Carregamento</th>
+              <th class="money">Data Descarga</th>
+              <th class="number">Toneladas</th>
               <th class="money">Preco Tonelada</th>
               <th class="money">Total</th>
             </tr>
@@ -163,7 +163,7 @@
               <td class="money">{{ item.Destino }}</td>
               <td class="money">{{ item.Data_Carga | asDayMonth }}</td>
               <td class="money">{{ item.Data_Descarga | asDayMonth }}</td>
-              <td class="number">{{ item.Peso }}</td>
+              <td class="number">{{ item.Toneladas }}</td>
               <td class="money">{{ item.Preco | currency }}</td>
               <td class="money">{{ item.Valor | currency }}</td>
             </tr>

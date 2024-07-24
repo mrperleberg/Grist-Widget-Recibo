@@ -3,10 +3,11 @@ body {
   max-width: 800px;
   margin: 0 auto;
   padding: 5px;
+  font-size: 50%;
 }
 
 .meta {
-  color: #ff8000;
+  color: #4682B4;
 }
 
 .header .title {
@@ -40,25 +41,25 @@ body {
   padding: 1px;
   margin-top: 1em;
   margin-bottom: 1em;
-  background: #ff8000;
+  background: #4682B4;
   -webkit-print-color-adjust: exact !important;
   color-adjust: exact !important;
 }
 
 .motorista .title, .summary .title {
-  margin-left: 4px;
+  margin-left: 2px;
   color: white;
   text-transform: uppercase;
 }
 
 .motorista .details, .summary .details {
-  padding: 4px;
+  padding: 2px;
   background-color: var(--grist-theme-page-panels-main-panel-bg, white);
 }
 
 table.viagens, table.financas {
   width: 100%;
-  border: 1px solid #ff8000;
+  border: 1px solid #4682B4;
   border-collapse: collapse;
 }
 
@@ -68,17 +69,17 @@ table.viagens th, table.financas th {
   color: white;
   text-transform: uppercase;
   font-weight: normal;
-  padding: 4px;
+  padding: 2px;
 }
 
 table.viagens td, table.financas td {
   background-color: var(--grist-theme-page-panels-main-panel-bg, white);
-  padding: 4px;
+  padding: 2px;
 }
 
 .motorista .title, .summary .title, table.viagens th, table.financas th, .help .title {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
 
 .descricao {
@@ -121,7 +122,7 @@ div.summary {
 }
 
 div.summary .part, div.summary .total {
-  padding: 10px;
+  padding: 5px;
 }
 
 div.summary .part {
@@ -132,7 +133,7 @@ div.summary .part {
 div.summary .total {
   display: block;
   flex-grow: 1;
-  background: #000080;
+  background: #0064b6;
   font-size: 140%;
 }
 
@@ -142,8 +143,8 @@ div.summary {
 }
 
 div.summary .total {
-  border-top-right-radius: 0.5em;
-  border-bottom-right-radius: 0.5em;
+  border-top-right-radius: 0.0em;
+  border-bottom-right-radius: 0.0em;
 }
 
 div.summary .title, div.summary .details {
@@ -168,7 +169,7 @@ div.summary::after {
 
 .thanks {
   text-align: right;
-  color: #C83200;
+  color: #4682B4;
   font-size: 200%;
 }
 
@@ -193,7 +194,7 @@ div.print {
 }
 
 div.print a {
-  background: #C83200;
+  background: #4682B4;
   display: block;
   font-size: 200%;
   color: white;
@@ -218,7 +219,7 @@ div.column-name {
 }
 
 .column-name {
-  background: blue;
+  background: #4682B4;
   color: white;
   margin: 2px;
   padding: 2px;
@@ -231,7 +232,7 @@ div.column-name {
 }
 
 .column-expected {
-  background: blue;
+  background: #4682B4;
 }
 
 .column-ignored {
