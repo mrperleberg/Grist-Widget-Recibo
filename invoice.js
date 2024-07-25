@@ -33,7 +33,6 @@ function addDemo(row) {
     row.Motorista = {
       Name: 'Motorista.Name',
       Street1: 'Motorista.Street1',
-      Street2: 'Motorista.Street2',
       City: 'Motorista.City',
       State: '.State',
       Zip: '.Zip'

@@ -97,7 +97,7 @@
 
 
 
-        <div class="motorista" v-for="funcionario in (invoice.Motorista ? [invoice.Motorista] : [])">
+        <!-- <div class="motorista" v-for="funcionario in (invoice.Motorista ? [invoice.Motorista] : [])">
           <div class="title">Motorista</div>
           <div class="details">
             <template v-if="typeof(funcionario) === 'string'">
@@ -108,16 +108,28 @@
               <template v-if="funcionario.Endereco">
                 {{ funcionario.Endereco }},
               </template>
-              <template v-if="funcionario.Street2">
-                {{ funcionario.Street2 }},
-              </template>
               {{ funcionario.Cidade }}, {{ funcionario.Estado }}. {{ funcionario.CEP }}
               <template v-if="funcionario.Country">
                 <br />{{ funcionario.Country }}
               </template>
             </template>
           </div>
-        </div>
+        </div> -->
+
+        
+          <table class="viagens">
+            <tr>
+              <th colspan="8" class="descricao">Motorista</th>
+            </tr>
+            <tr>
+              <td colspan="8" class="descricao">{{ invoice.Motorista.Motorista }}</td>
+              <td colspan="8" class="money">Taxa de comissão: {{ 100*invoice.Motorista.TaxaComissao }}%</td>
+            </tr>
+            <tr>
+              <td colspan="8" class="descricao">{{ invoice.Motorista.Endereco }}. {{ invoice.Motorista.Cidade }}, {{ invoice.Motorista.Estado }}. {{ invoice.Motorista.CEP }}</td>
+              <td colspan="8" class="money">Veiculo Placa: {{ invoice.Placa }}</td>
+            </tr>
+          </table>
 
 
 
@@ -145,27 +157,31 @@
           </template>
           <template v-else>
             <tr>
-              <th colspan="8" class="tituloTabela">Viagens</th>
+              <th colspan="10" class="tituloTabela">Viagens</th>
             </tr>
             <tr>
               <th class="descricao">Descrição</th>
+              <th class="money">Transp.</th>
               <th class="money">Origem</th>
               <th class="money">Destino</th>
               <th class="money">Data Carregamento</th>
               <th class="money">Data Descarga</th>
               <th class="number">Toneladas</th>
               <th class="money">Preco Tonelada</th>
-              <th class="money">Total</th>
+              <th class="money">Total Bruto</th>
+              <th class="money">Total Liquido</th>
             </tr>
             <tr v-for="item in invoice.Viagens">
               <td class="descricao">{{ item.Produto }}</td>
+              <td class="money">{{ item.Transportadora }}</td>
               <td class="money">{{ item.Origem }}</td>
               <td class="money">{{ item.Destino }}</td>
               <td class="money">{{ item.Data_Carga | asDayMonth }}</td>
               <td class="money">{{ item.Data_Descarga | asDayMonth }}</td>
               <td class="number">{{ item.Toneladas }}</td>
               <td class="money">{{ item.Preco | currency }}</td>
-              <td class="money">{{ item.Valor | currency }}</td>
+              <td class="money">{{ item.Valor_Bruto | currency }}</td>
+              <td class="money">{{ item.Valor_Liquido | currency }}</td>
             </tr>
           </template>
         </table>

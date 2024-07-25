@@ -77,6 +77,7 @@ table.viagens td, table.financas td {
   background-color: white;
   color: #000000;
   padding: 2px;
+  font-size: 80%;
 }
 
 .motorista .title, .summary .title, table.viagens th, table.financas th, .help .title {
