@@ -20,8 +20,9 @@
     <div id="app">
       <div class="status" v-if="status">
         <template v-if="status === 'waiting'">
-          <p>Waiting for data...</p>
-          <ul>
+          <p>Nenhum recibo selecionado.</p>
+          <p>Crie um novo recibo, e entao insira novas viagens.</p>
+          <!-- <ul>
             <li v-bind:class="[tableConnected ? 'done' : '']">I need <b>read table</b> access.</li>
             <li v-bind:class="[haveRows ? 'done' : '']">I need at least one row of data.</li>
             <li v-bind:class="[rowConnected ? 'done' : '']">I need <b>Select By</b> set.</li>
@@ -30,7 +31,7 @@
           <ul>
             <li><a class="button" href="index.html?demo=1">A filled out invoice</a></li>
             <li><a class="button" href="index.html?labels=1">A labelled invoice</a></li>
-          </ul>
+          </ul> -->
         </template>
         <template v-else>
           {{ status }}
@@ -261,7 +262,7 @@
 
 
 
-        <template v-for="help in (invoice.Help ? [invoice.Help] : [])">
+        <!-- <template v-for="help in (invoice.Help ? [invoice.Help] : [])">
           <div class="help">
             <div class="help-close">
               Add <span class="column-name">Due</span> or <span class="column-name">Emissao</span> date to hide this help.
@@ -289,7 +290,7 @@
               </template>
             </div>
           </div>
-        </template>
+        </template> -->
 
 
 

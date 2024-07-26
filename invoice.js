@@ -7,11 +7,11 @@ function ready(fn) {
 }
 
 function addDemo(row) {
-  if (!row.Issued && !row.Due) {
-    for (const key of ['Codigo', 'Issued', 'Due']) {
+  if (!row.Emissao) {
+    for (const key of ['Codigo', 'Emissao']) {
       if (!row[key]) { row[key] = key; }
     }
-    for (const key of ['Subtotal', 'Deduction', 'Taxes', 'Total']) {
+    for (const key of ['Subtotal', 'Deduction', 'Total']) {
       if (!(key in row)) { row[key] = key; }
     }
     if (!('Nota' in row)) { row.Nota = '(Anything in a Nota column goes here)'; }
@@ -38,16 +38,16 @@ function addDemo(row) {
       Zip: '.Zip'
     }
   }
-  if (!row.Items) {
-    row.Items = [
+  if (!row.Viagens) {
+    row.Viagens = [
       {
-        Description: 'Items[0].Description',
+        Description: 'Viagens[0].Description',
         Quantity: '.Quantity',
         Total: '.Total',
         Price: '.Price',
       },
       {
-        Description: 'Items[1].Description',
+        Description: 'Viagens[1].Description',
         Quantity: '.Quantity',
         Total: '.Total',
         Price: '.Price',
@@ -180,8 +180,8 @@ function updateInvoice(row) {
     // Add some guidance about columns.
     const want = new Set(Object.keys(addDemo({})));
     const accepted = new Set(['References']);
-    const importance = ['Codigo', 'Motorista', 'Items', 'Total', 'Invoicer', 'Due', 'Issued', 'Subtotal', 'Deduction', 'Taxes', 'Nota'];
-    if (!(row.Due || row.Issued)) {
+    const importance = ['Codigo', 'Motorista', 'Viagens', 'Total', 'Autor', 'Emissao', 'Subtotal', 'Deduction', 'Taxes', 'Nota'];
+    if (!(row.Emissao)) {
       const seen = new Set(Object.keys(row).filter(k => k !== 'id' && k !== '_error_'));
       const help = row.Help = {};
       help.seen = prepareList(seen);
@@ -197,21 +197,21 @@ function updateInvoice(row) {
       if (recognized.length > 0) {
         help.recognized = prepareList(recognized);
       }
-      if (!seen.has('References') && !(row.Issued || row.Due)) {
+      if (!seen.has('References') && !(row.Emissao)) {
         row.SuggestReferencesColumn = true;
       }
     }
     addDemo(row);
-    if (!row.Subtotal && !row.Total && row.Items && Array.isArray(row.Items)) {
+    if (!row.Subtotal && !row.Total && row.Viagens && Array.isArray(row.Viagens)) {
       try {
-        row.Subtotal = row.Items.reduce((a, b) => a + b.Price * b.Quantity, 0);
+        row.Subtotal = row.Viagens.reduce((a, b) => a + b.Price * b.Quantity, 0);
         row.Total = row.Subtotal + (row.Taxes || 0) - (row.Deduction || 0);
       } catch (e) {
         console.error(e);
       }
     }
-    if (row.Invoicer && row.Invoicer.Website && !row.Invoicer.Url) {
-      row.Invoicer.Url = tweakUrl(row.Invoicer.Website);
+    if (row.Autor && row.Autor.Website && !row.Autor.Url) {
+      row.Autor.Url = tweakUrl(row.Autor.Website);
     }
 
     // Fiddle around with updating Vue (I'm not an expert).
