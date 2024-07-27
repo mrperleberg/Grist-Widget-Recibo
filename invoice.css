@@ -37,6 +37,64 @@ body {
   display: block;
 }
 
+.debitos {
+  padding: 1px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  background: #4682B4;
+  -webkit-print-color-adjust: exact !important;
+  color-adjust: exact !important;
+
+}
+
+.debitos .title {
+  margin-left: 2px;
+  color: white;
+  text-transform: uppercase;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.debitos .details {
+  padding: 2px;
+  background-color: white;
+  color: #000000;
+}
+
+div.debitos .title, div.debitos .details {
+  text-align: right;
+}
+
+div.debitos {
+  display: flex;
+  width: 70%;
+  padding: 0px;
+  align-items: flex-end;
+  /* border-top-right-radius: 2em;
+  border-bottom-right-radius: 2em; */
+}
+
+div.debitos .part {
+  padding: 5px;
+  width: 33%;
+  padding-right: 20px;
+}
+
+div.debitos .total {
+  display: block;
+  flex-grow: 1;
+  background: #0064b6;
+  font-size: 120%;
+  border-top-right-radius: 0.0em;
+  border-bottom-right-radius: 0.0em;
+}
+
+div.debitos::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
 .motorista, .viagens, .financas, .summary {
   padding: 1px;
   margin-top: 1em;
@@ -176,7 +234,7 @@ div.summary::after {
   font-size: 200%;
 }
 
-div.instructions, .newlined, p.note {
+div.instructions, .newlined, p.nota {
   white-space: pre-line;
 }
 
