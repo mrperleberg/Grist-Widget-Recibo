@@ -3,7 +3,6 @@ body {
   max-width: 800px;
   margin: 0 auto;
   padding: 5px;
-  font-size: 70%;
 }
 
 .meta {
@@ -84,9 +83,9 @@ div.debitos .total {
   display: block;
   flex-grow: 1;
   background: #0064b6;
-  font-size: 120%;
   border-top-right-radius: 0.0em;
   border-bottom-right-radius: 0.0em;
+  font-size: 100%;
 }
 
 div.debitos::after {
@@ -95,7 +94,26 @@ div.debitos::after {
   clear: both;
 }
 
-.motorista, .viagens, .financas, .summary {
+body {
+  font-size: 100%;
+}
+.info, .supplier, .cabecalho_da_pagina { 
+  font-size: 100%;
+}
+table.tabInfoMotorista td, table.tabInfoMotorista th {
+  font-size: 100%;
+}
+table.viagens td, table.viagens th {
+  font-size: 80%;
+}
+table.financas {
+  font-size: 100%;
+}
+div.summary .total, .apenas_o_total_aqui {
+  font-size: 100%;
+}
+
+.motorista, .viagens, .tabInfoMotorista, .financas, .summary {
   padding: 1px;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -116,14 +134,14 @@ div.debitos::after {
   color: #000000;
 }
 
-table.viagens, table.financas {
+table.viagens, table.tabInfoMotorista, table.financas {
   width: 100%;
   border: 1px solid #4682B4;
   border-collapse: collapse;
 }
 
 
-table.viagens th, table.financas th {
+table.viagens th, table.tabInfoMotorista, table.financas th {
   text-align: right;
   color: white;
   text-transform: uppercase;
@@ -131,11 +149,10 @@ table.viagens th, table.financas th {
   padding: 2px;
 }
 
-table.viagens td, table.financas td {
+table.viagens td, table.tabInfoMotorista td, table.financas td {
   background-color: white;
   color: #000000;
   padding: 2px;
-  font-size: 80%;
 }
 
 .motorista .title, .summary .title, table.viagens th, table.financas th, .help .title {
@@ -195,7 +212,6 @@ div.summary .total {
   display: block;
   flex-grow: 1;
   background: #0064b6;
-  font-size: 120%;
 }
 
 div.summary {

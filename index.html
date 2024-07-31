@@ -118,7 +118,7 @@
         </div> -->
 
         
-          <table class="viagens">
+          <table class="tabInfoMotorista">
             <tr>
               <th colspan="8" class="descricao">Motorista</th>
             </tr>
@@ -161,28 +161,53 @@
               <th colspan="10" class="tituloTabela">Viagens</th>
             </tr>
             <tr>
-              <th class="descricao">Descrição</th>
+              <th class="descricao">Data</th>
+              <th class="money">Descrição</th>
               <th class="money">Transp.</th>
               <th class="money">Origem</th>
               <th class="money">Destino</th>
-              <th class="money">Data Carregamento</th>
-              <th class="money">Data Descarga</th>
+              <th class="money">CTE</th>
               <th class="number">KGs</th>
-              <th class="money">Preco Tonelada</th>
-              <th class="money">Total Bruto</th>
-              <th class="money">Total Liquido</th>
+              <th class="money">Preco<br>Tonelada</th>
+              <th class="money">Valor<br>Bruto</th>
+              <th class="money">Valor<br>Liquido</th>
             </tr>
             <tr v-for="item in invoice.Viagens">
-              <td class="descricao">{{ item.Produto }}</td>
+              <td class="descricao">{{ item.Data_Carga | asDayMonth }}</td>
+              <td class="money">{{ item.Produto }}</td>
               <td class="money">{{ item.Transportadora }}</td>
               <td class="money">{{ item.Origem }}</td>
               <td class="money">{{ item.Destino }}</td>
-              <td class="money">{{ item.Data_Carga | asDayMonth }}</td>
-              <td class="money">{{ item.Data_Descarga | asDayMonth }}</td>
+              <td class="money">{{ item.CTE }}</td>
               <td class="number">{{ item.Toneladas }}</td>
               <td class="money">{{ item.Preco | currency }}</td>
               <td class="money">{{ item.Valor_Bruto | currency }}</td>
               <td class="money">{{ item.Valor_Liquido | currency }}</td>
+            </tr>
+            <tr>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+              <th class="money">Total:</th>
+              <th class="money">{{ invoice.Subtotal | currency }}</th>
+              <th class="money">{{ invoice.Total_Liquido | currency }}</th>
+              <!-- <th colspan="10" class="tituloTabela">Total</th> -->
+            </tr>
+            <tr>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+              <th class="money">Comissao:</th>
+              <th class="money">{{ invoice.Comissao | currency }}</th>
+              <th> </th>
             </tr>
           </template>
         </table>
@@ -204,9 +229,9 @@
             </tr>
           </template>
           <template v-else>
-            <tr>
+            <!-- <tr>
               <th colspan="2" class="tituloTabela">Descontos</th>
-            </tr>
+            </tr> -->
             <tr>
               <th class="descricao">Descrição</th>
               <th class="money">Valor</th>
@@ -214,6 +239,10 @@
             <tr v-for="item in invoice.Financas">
               <td class="descricao">{{ item.Descricao }}</td>
               <td class="money">{{ item.Valor | currency }}</td>
+            </tr>
+            <tr>
+              <th> </th>
+              <th class="money">Total: {{invoice.Descontos | currency}}</th>
             </tr>
           </template>
         </table>
