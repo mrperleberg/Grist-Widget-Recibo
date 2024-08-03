@@ -236,13 +236,21 @@
               <th class="descricao">Descrição</th>
               <th class="money">Valor</th>
             </tr>
+            <tr>
+              <td class="descricao">Saldo Anterior</td>
+              <td class="money">{{ invoice.Devia | currency}}</td>
+            </tr>
+            <tr>
+              <td class="descricao">Comissao</td>
+              <td class="money">{{ invoice.Comissao | currency}}</td>
+            </tr>
             <tr v-for="item in invoice.Financas">
               <td class="descricao">{{ item.Descricao }}</td>
               <td class="money">{{ item.Valor | currency }}</td>
             </tr>
             <tr>
               <th> </th>
-              <th class="money">Total: {{invoice.Descontos | currency}}</th>
+              <th class="money">Total: {{invoice.Devia + invoice.Comissao + invoice.Descontos | currency}}</th>
             </tr>
           </template>
         </table>
@@ -259,7 +267,7 @@
 
 
 
-        <div class="summary">
+        <!-- <div class="summary">
           <div class="part">
             <div class="title">Subtotal</div>
             <div class="details">{{ invoice.Subtotal | currency }}</div>
@@ -291,7 +299,7 @@
             <div class="title">Saldo Devedor</div>
             <div class="details">{{ invoice.Devendo | currency }}</div>
           </div>
-        </div>
+        </div> -->
 
 
 
