@@ -10,8 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
 
-    <script src="invoice.js?ver=11"></script>
-    <script src="exampleData.js"></script>
+    <script src="invoice.js?ver=11.1"></script>
+    <!-- <script src="exampleData.js"></script> -->
     <script src="exampleData2.js"></script>
 
     <link rel="stylesheet" href="invoice.css?ver=17">
@@ -143,20 +143,8 @@
 
 
         <table class="viagens">
-          <template v-if="!Array.isArray(invoice.Viagens)">
-            <tr>
-              <th colspan="1" class="tituloTabela">Viagens</th>
-            </tr>
-            <tr>
-              <th class="descricao">Descrição</th>
-              <th class="money">Total</th>
-            </tr>
-            <tr>
-              <td class="descricao">{{ invoice.Viagens }}</td>
-              <td class="money">{{ invoice.Valor | currency }}</td>
-            </tr>
-          </template>
-          <template v-else>
+
+          <template v-if="Array.isArray(invoice.Viagens)">
             <tr>
               <th colspan="10" class="tituloTabela">Viagens</th>
             </tr>
@@ -185,30 +173,21 @@
               <td class="money">{{ item.Valor_Liquido | currency }}</td>
             </tr>
             <tr>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th class="money">Total:</th>
+              <th colspan="8"  class="money">Total:</th>
               <th class="money">{{ invoice.Subtotal | currency }}</th>
               <th class="money">{{ invoice.Total_Liquido | currency }}</th>
               <!-- <th colspan="10" class="tituloTabela">Total</th> -->
             </tr>
             <tr>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th class="money">Comissao:</th>
+              <th colspan="8" class="money">Comissao:</th>
               <th class="money">{{ invoice.Comissao | currency }}</th>
               <th> </th>
             </tr>
+          </template>
+          <!-- <template v-else>
+            <tr>
+              <td colspan="10" class="money">{{ invoice.Subtotal | currency }}</td>
+            </tr> -->
           </template>
         </table>
 
@@ -218,41 +197,37 @@
 
         
         <table class="financas">
-          <template v-if="!Array.isArray(invoice.Financas)">
-            <tr>
-              <th class="descricao">Descrição</th>
-              <th class="money">Total</th>
-            </tr>
-            <tr>
-              <td>{{ invoice.Financas }}</td>
-              <td class="money">{{ invoice.Valor | currency }}</td>
-            </tr>
-          </template>
-          <template v-else>
-            <!-- <tr>
-              <th colspan="2" class="tituloTabela">Descontos</th>
-            </tr> -->
-            <tr>
-              <th class="descricao">Descrição</th>
-              <th class="money">Valor</th>
-            </tr>
-            <tr>
-              <td class="descricao">Saldo Anterior</td>
-              <td class="money">{{ invoice.Devia | currency}}</td>
-            </tr>
-            <tr>
-              <td class="descricao">Comissao</td>
-              <td class="money">{{ invoice.Comissao | currency}}</td>
-            </tr>
+          <!-- <tr>
+            <th colspan="2" class="tituloTabela">Descontos</th>
+          </tr> -->
+          <tr>
+            <th class="descricao">Descrição</th>
+            <th class="money">Total</th>
+          </tr>
+          <tr>
+            <td class="descricao">Saldo Anterior</td>
+            <td class="money">{{ invoice.Devia | currency}}</td>
+          </tr>
+          <tr>
+            <td class="descricao">Comissao</td>
+            <td class="money">{{ invoice.Comissao | currency}}</td>
+          </tr>
+
+          <template v-if="Array.isArray(invoice.Financas)">
             <tr v-for="item in invoice.Financas">
               <td class="descricao">{{ item.Descricao }}</td>
               <td class="money">{{ item.Valor | currency }}</td>
             </tr>
+          <!-- </template><template v-else>
             <tr>
-              <th> </th>
-              <th class="money">Total: {{invoice.Devia + invoice.Comissao + invoice.Descontos | currency}}</th>
-            </tr>
+              <td>{{ invoice.Financas }}</td>
+              <td class="money">{{ invoice.Valor | currency }}</td>
+            </tr> -->
           </template>
+          <tr>
+            <th> </th>
+            <th class="money">Total: {{invoice.Devia + invoice.Comissao + invoice.Descontos | currency}}</th>
+          </tr>
         </table>
 
 

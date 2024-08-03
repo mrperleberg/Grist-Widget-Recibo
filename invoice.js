@@ -38,22 +38,6 @@ function addDemo(row) {
       Zip: '.Zip'
     }
   }
-  if (!row.Viagens) {
-    row.Viagens = [
-      {
-        Description: 'Viagens[0].Description',
-        Quantity: '.Quantity',
-        Total: '.Total',
-        Price: '.Price',
-      },
-      {
-        Description: 'Viagens[1].Description',
-        Quantity: '.Quantity',
-        Total: '.Total',
-        Price: '.Price',
-      },
-    ];
-  }
   return row;
 }
 
@@ -231,6 +215,7 @@ function updateInvoice(row) {
 }
 
 ready(function() {
+  console.log(exampleData2)
   // Update the invoice anytime the document data changes.
   grist.ready();
   grist.onRecord(updateInvoice);
