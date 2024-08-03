@@ -39,53 +39,98 @@
       </div>
 
 
-
       <template v-if="invoice">
-        <div class="top">
+        <template v-if="status !== 'waiting'">
+          <div class="top">
 
 
-          <div class="block">
-            <div class="header">
-              <div class="meta title">Recibo</div>
+            <div class="block">
+              <div class="header">
+                <div class="meta title">Recibo</div>
+              </div>
+              <div class="info"><span class="meta">Numero do Recibo</span> #{{ invoice.Codigo }}</div>
+              <div class="info" v-if="invoice.Emissao"><div class="meta date-tag">Emissão</div> {{ invoice.Emissao | asDate }}</div>
+              <!-- <div class="info" v-if="invoice.Due"><div class="meta date-tag">Due</div> {{ invoice.Due | asDate }}</div> -->
             </div>
-            <div class="info"><span class="meta">Numero do Recibo</span> #{{ invoice.Codigo }}</div>
-            <div class="info" v-if="invoice.Emissao"><div class="meta date-tag">Emissão</div> {{ invoice.Emissao | asDate }}</div>
-            <!-- <div class="info" v-if="invoice.Due"><div class="meta date-tag">Due</div> {{ invoice.Due | asDate }}</div> -->
+            
+
+
+            <div class="supplier">
+              <div v-for="business in (invoice.Autor ? [invoice.Autor] : [])">
+                <template v-if="typeof(business) === 'string'">
+                  <div class="address newlined">{{ business }}</div>
+                </template>
+                <template v-else>
+                  <div class="address">
+                    <span class="name">{{ business.Empresa }}</span><br />
+                    {{ business.Endereco }}<br />
+                    <!-- <template v-if="business.Street2">
+                      {{ business.Street2 }}<br />
+                    </template> -->
+                    {{ business.Cidade }} {{ business.Estado }} {{ business.CEP }}<br />
+                    <template v-if="business.Pais">
+                      {{ business.Pais }}<br />
+                    </template>
+                  </div>
+                  <template v-if="business.Email">
+                    <div class="email">{{ business.Email }}</div>
+                  </template>
+                  <template v-if="business.Phone">
+                    <div class="phone">{{ business.Phone }}</div>
+                  </template>
+                  <template v-if="business.Website">
+                    <div class="website"><a v-bind:href="business.Url">{{ business.Website }}</a></div>
+                  </template>
+                </template>
+              </div>
+            </div>
           </div>
-          
+        
 
 
-          <div class="supplier">
-            <div v-for="business in (invoice.Autor ? [invoice.Autor] : [])">
-              <template v-if="typeof(business) === 'string'">
-                <div class="address newlined">{{ business }}</div>
+
+
+
+
+
+
+
+
+
+
+          <!-- <div class="motorista" v-for="funcionario in (invoice.Motorista ? [invoice.Motorista] : [])">
+            <div class="title">Motorista</div>
+            <div class="details">
+              <template v-if="typeof(funcionario) === 'string'">
+                <div class="newlined">{{ funcionario }}</div>
               </template>
               <template v-else>
-                <div class="address">
-                  <span class="name">{{ business.Empresa }}</span><br />
-                  {{ business.Endereco }}<br />
-                  <!-- <template v-if="business.Street2">
-                    {{ business.Street2 }}<br />
-                  </template> -->
-                  {{ business.Cidade }} {{ business.Estado }} {{ business.CEP }}<br />
-                  <template v-if="business.Pais">
-                    {{ business.Pais }}<br />
-                  </template>
-                </div>
-                <template v-if="business.Email">
-                  <div class="email">{{ business.Email }}</div>
+                <div>{{ funcionario.Motorista }}</div>
+                <template v-if="funcionario.Endereco">
+                  {{ funcionario.Endereco }},
                 </template>
-                <template v-if="business.Phone">
-                  <div class="phone">{{ business.Phone }}</div>
-                </template>
-                <template v-if="business.Website">
-                  <div class="website"><a v-bind:href="business.Url">{{ business.Website }}</a></div>
+                {{ funcionario.Cidade }}, {{ funcionario.Estado }}. {{ funcionario.CEP }}
+                <template v-if="funcionario.Country">
+                  <br />{{ funcionario.Country }}
                 </template>
               </template>
             </div>
-          </div>
-        </div>
-        
+          </div> -->
+
+          
+            <table class="tabInfoMotorista">
+              <tr>
+                <th colspan="8" class="descricao">Motorista</th>
+              </tr>
+              <tr>
+                <td colspan="8" class="descricao">{{ invoice.Motorista.Motorista }}</td>
+                <td colspan="8" class="money">Taxa de comissão: {{ 100*invoice.Motorista.TaxaComissao }}%</td>
+              </tr>
+              <tr>
+                <td colspan="8" class="descricao">{{ invoice.Motorista.Endereco }}. {{ invoice.Motorista.Cidade }}, {{ invoice.Motorista.Estado }}. {{ invoice.Motorista.CEP }}</td>
+                <td colspan="8" class="money">Veiculo Placa: {{ invoice.Placa }}</td>
+              </tr>
+            </table>
 
 
 
@@ -97,38 +142,91 @@
 
 
 
+          <table class="viagens">
 
-        <!-- <div class="motorista" v-for="funcionario in (invoice.Motorista ? [invoice.Motorista] : [])">
-          <div class="title">Motorista</div>
-          <div class="details">
-            <template v-if="typeof(funcionario) === 'string'">
-              <div class="newlined">{{ funcionario }}</div>
+            <template v-if="Array.isArray(invoice.Viagens)">
+              <tr>
+                <th colspan="10" class="tituloTabela">Viagens</th>
+              </tr>
+              <tr>
+                <th class="descricao">Data</th>
+                <th class="money">Descrição</th>
+                <th class="money">Transp.</th>
+                <th class="money">Origem</th>
+                <th class="money">Destino</th>
+                <th class="money">CTE</th>
+                <th class="number">KGs</th>
+                <th class="money">Preco<br>Tonelada</th>
+                <th class="money">Valor<br>Bruto</th>
+                <th class="money">Valor<br>Liquido</th>
+              </tr>
+              <tr v-for="item in invoice.Viagens">
+                <td class="descricao">{{ item.Data_Carga | asDayMonth }}</td>
+                <td class="money">{{ item.Produto }}</td>
+                <td class="money">{{ item.Transportadora }}</td>
+                <td class="money">{{ item.Origem }}</td>
+                <td class="money">{{ item.Destino }}</td>
+                <td class="money">{{ item.CTE }}</td>
+                <td class="number">{{ item.Toneladas }}</td>
+                <td class="money">{{ item.Preco | currency }}</td>
+                <td class="money">{{ item.Valor_Bruto | currency }}</td>
+                <td class="money">{{ item.Valor_Liquido | currency }}</td>
+              </tr>
+              <tr>
+                <th colspan="8"  class="money">Total:</th>
+                <th class="money">{{ invoice.Subtotal | currency }}</th>
+                <th class="money">{{ invoice.Total_Liquido | currency }}</th>
+                <!-- <th colspan="10" class="tituloTabela">Total</th> -->
+              </tr>
+              <tr>
+                <th colspan="8" class="money">Comissao:</th>
+                <th class="money">{{ invoice.Comissao | currency }}</th>
+                <th> </th>
+              </tr>
             </template>
-            <template v-else>
-              <div>{{ funcionario.Motorista }}</div>
-              <template v-if="funcionario.Endereco">
-                {{ funcionario.Endereco }},
-              </template>
-              {{ funcionario.Cidade }}, {{ funcionario.Estado }}. {{ funcionario.CEP }}
-              <template v-if="funcionario.Country">
-                <br />{{ funcionario.Country }}
-              </template>
+            <!-- <template v-else>
+              <tr>
+                <td colspan="10" class="money">{{ invoice.Subtotal | currency }}</td>
+              </tr> -->
             </template>
-          </div>
-        </div> -->
+          </table>
 
-        
-          <table class="tabInfoMotorista">
+
+
+
+
+          
+          <table class="financas">
+            <!-- <tr>
+              <th colspan="2" class="tituloTabela">Descontos</th>
+            </tr> -->
             <tr>
-              <th colspan="8" class="descricao">Motorista</th>
+              <th class="descricao">Descrição</th>
+              <th class="money">Total</th>
             </tr>
             <tr>
-              <td colspan="8" class="descricao">{{ invoice.Motorista.Motorista }}</td>
-              <td colspan="8" class="money">Taxa de comissão: {{ 100*invoice.Motorista.TaxaComissao }}%</td>
+              <td class="descricao">Saldo Anterior</td>
+              <td class="money">{{ invoice.Devia | currency}}</td>
             </tr>
             <tr>
-              <td colspan="8" class="descricao">{{ invoice.Motorista.Endereco }}. {{ invoice.Motorista.Cidade }}, {{ invoice.Motorista.Estado }}. {{ invoice.Motorista.CEP }}</td>
-              <td colspan="8" class="money">Veiculo Placa: {{ invoice.Placa }}</td>
+              <td class="descricao">Comissao</td>
+              <td class="money">{{ invoice.Comissao | currency}}</td>
+            </tr>
+
+            <template v-if="Array.isArray(invoice.Financas)">
+              <tr v-for="item in invoice.Financas">
+                <td class="descricao">{{ item.Descricao }}</td>
+                <td class="money">{{ item.Valor | currency }}</td>
+              </tr>
+            <!-- </template><template v-else>
+              <tr>
+                <td>{{ invoice.Financas }}</td>
+                <td class="money">{{ invoice.Valor | currency }}</td>
+              </tr> -->
+            </template>
+            <tr>
+              <th> </th>
+              <th class="money">Total: {{invoice.Devia + invoice.Comissao + invoice.Descontos | currency}}</th>
             </tr>
           </table>
 
@@ -142,199 +240,103 @@
 
 
 
-        <table class="viagens">
-
-          <template v-if="Array.isArray(invoice.Viagens)">
-            <tr>
-              <th colspan="10" class="tituloTabela">Viagens</th>
-            </tr>
-            <tr>
-              <th class="descricao">Data</th>
-              <th class="money">Descrição</th>
-              <th class="money">Transp.</th>
-              <th class="money">Origem</th>
-              <th class="money">Destino</th>
-              <th class="money">CTE</th>
-              <th class="number">KGs</th>
-              <th class="money">Preco<br>Tonelada</th>
-              <th class="money">Valor<br>Bruto</th>
-              <th class="money">Valor<br>Liquido</th>
-            </tr>
-            <tr v-for="item in invoice.Viagens">
-              <td class="descricao">{{ item.Data_Carga | asDayMonth }}</td>
-              <td class="money">{{ item.Produto }}</td>
-              <td class="money">{{ item.Transportadora }}</td>
-              <td class="money">{{ item.Origem }}</td>
-              <td class="money">{{ item.Destino }}</td>
-              <td class="money">{{ item.CTE }}</td>
-              <td class="number">{{ item.Toneladas }}</td>
-              <td class="money">{{ item.Preco | currency }}</td>
-              <td class="money">{{ item.Valor_Bruto | currency }}</td>
-              <td class="money">{{ item.Valor_Liquido | currency }}</td>
-            </tr>
-            <tr>
-              <th colspan="8"  class="money">Total:</th>
-              <th class="money">{{ invoice.Subtotal | currency }}</th>
-              <th class="money">{{ invoice.Total_Liquido | currency }}</th>
-              <!-- <th colspan="10" class="tituloTabela">Total</th> -->
-            </tr>
-            <tr>
-              <th colspan="8" class="money">Comissao:</th>
-              <th class="money">{{ invoice.Comissao | currency }}</th>
-              <th> </th>
-            </tr>
-          </template>
-          <!-- <template v-else>
-            <tr>
-              <td colspan="10" class="money">{{ invoice.Subtotal | currency }}</td>
-            </tr> -->
-          </template>
-        </table>
 
 
-
-
-
-        
-        <table class="financas">
-          <!-- <tr>
-            <th colspan="2" class="tituloTabela">Descontos</th>
-          </tr> -->
-          <tr>
-            <th class="descricao">Descrição</th>
-            <th class="money">Total</th>
-          </tr>
-          <tr>
-            <td class="descricao">Saldo Anterior</td>
-            <td class="money">{{ invoice.Devia | currency}}</td>
-          </tr>
-          <tr>
-            <td class="descricao">Comissao</td>
-            <td class="money">{{ invoice.Comissao | currency}}</td>
-          </tr>
-
-          <template v-if="Array.isArray(invoice.Financas)">
-            <tr v-for="item in invoice.Financas">
-              <td class="descricao">{{ item.Descricao }}</td>
-              <td class="money">{{ item.Valor | currency }}</td>
-            </tr>
-          <!-- </template><template v-else>
-            <tr>
-              <td>{{ invoice.Financas }}</td>
-              <td class="money">{{ invoice.Valor | currency }}</td>
-            </tr> -->
-          </template>
-          <tr>
-            <th> </th>
-            <th class="money">Total: {{invoice.Devia + invoice.Comissao + invoice.Descontos | currency}}</th>
-          </tr>
-        </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- <div class="summary">
-          <div class="part">
-            <div class="title">Subtotal</div>
-            <div class="details">{{ invoice.Subtotal | currency }}</div>
-          </div>
-          <div class="part">
-            <div class="title">Comissao</div>
-            <div class="details">{{ invoice.Comissao | currency }}</div>
-          </div>
-          <div class="part">
-            <div class="title">Descontos</div>
-            <div class="details">{{ invoice.Descontos | currency }}</div>
-          </div>
-          <div class="total">
-            <div class="title">Total</div>
-            <div class="details">{{ invoice.Total | currency }}</div>
-          </div>
-        </div>
-        
-        <div class="debitos">
-          <div class="part">
-            <div class="title">Saldo Anterior</div>
-            <div class="details">{{ invoice.Devia | currency }}</div>
-          </div>
-          <div class="part">
-            <div class="title">Valor Pago</div>
-            <div class="details">{{ invoice.Pago | currency }}</div>
-          </div>
-          <div class="part">
-            <div class="title">Saldo Devedor</div>
-            <div class="details">{{ invoice.Devendo | currency }}</div>
-          </div>
-        </div> -->
-
-
-
-
-
-        
-        <template v-if="invoice.Nota_Debito">
-          <p class="nota">{{ invoice.Nota_Debito }}</p>
-        </template>
-        
-        <template v-if="invoice.Nota">
-          <p class="nota">{{ invoice.Nota }}</p>
-        </template>
-
-
-
-
-
-
-        <!-- <template v-for="help in (invoice.Help ? [invoice.Help] : [])">
-          <div class="help">
-            <div class="help-close">
-              Add <span class="column-name">Due</span> or <span class="column-name">Emissao</span> date to hide this help.
+          <!-- <div class="summary">
+            <div class="part">
+              <div class="title">Subtotal</div>
+              <div class="details">{{ invoice.Subtotal | currency }}</div>
             </div>
-            <div class="title">Column information</div>
-            <div class="details">
-              <table>
-                <tr v-for="group in ['recognized', 'expected', 'ignored']">
-                  <td class="key">{{ group }}</td>
-                  <td>
-                    <template v-if="group in help">
-                      <div v-bind:class="['column-name', 'column-' + group]" v-for="col in help[group]">{{col}}</div>
-                    </template>
-                    <template v-else>
-                      &mdash;
-                    </template>
-                  </td>
-                </tr>
-              </table>
-              <template v-if="invoice.SuggestReferencesColumn">
-                <div>For structured address and item information, add a <span class="column-name">References</span> column with this formula:</div>
-                <div>
-                  <pre>RECORD(rec, expand_refs=1)</pre>
-                </div>
-              </template>
+            <div class="part">
+              <div class="title">Comissao</div>
+              <div class="details">{{ invoice.Comissao | currency }}</div>
+            </div>
+            <div class="part">
+              <div class="title">Descontos</div>
+              <div class="details">{{ invoice.Descontos | currency }}</div>
+            </div>
+            <div class="total">
+              <div class="title">Total</div>
+              <div class="details">{{ invoice.Total | currency }}</div>
             </div>
           </div>
-        </template> -->
+          
+          <div class="debitos">
+            <div class="part">
+              <div class="title">Saldo Anterior</div>
+              <div class="details">{{ invoice.Devia | currency }}</div>
+            </div>
+            <div class="part">
+              <div class="title">Valor Pago</div>
+              <div class="details">{{ invoice.Pago | currency }}</div>
+            </div>
+            <div class="part">
+              <div class="title">Saldo Devedor</div>
+              <div class="details">{{ invoice.Devendo | currency }}</div>
+            </div>
+          </div> -->
+
+
+
+
+
+          
+          <template v-if="invoice.Nota_Debito">
+            <p class="nota">{{ invoice.Nota_Debito }}</p>
+          </template>
+          
+          <template v-if="invoice.Nota">
+            <p class="nota">{{ invoice.Nota }}</p>
+          </template>
 
 
 
 
 
 
-        
-        <div class="footer">
-          <div class="thanks">
-            Obrigado!
+          <!-- <template v-for="help in (invoice.Help ? [invoice.Help] : [])">
+            <div class="help">
+              <div class="help-close">
+                Add <span class="column-name">Due</span> or <span class="column-name">Emissao</span> date to hide this help.
+              </div>
+              <div class="title">Column information</div>
+              <div class="details">
+                <table>
+                  <tr v-for="group in ['recognized', 'expected', 'ignored']">
+                    <td class="key">{{ group }}</td>
+                    <td>
+                      <template v-if="group in help">
+                        <div v-bind:class="['column-name', 'column-' + group]" v-for="col in help[group]">{{col}}</div>
+                      </template>
+                      <template v-else>
+                        &mdash;
+                      </template>
+                    </td>
+                  </tr>
+                </table>
+                <template v-if="invoice.SuggestReferencesColumn">
+                  <div>For structured address and item information, add a <span class="column-name">References</span> column with this formula:</div>
+                  <div>
+                    <pre>RECORD(rec, expand_refs=1)</pre>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template> -->
+
+
+
+
+
+
+          
+          <div class="footer">
+            <div class="thanks">
+              Obrigado!
+            </div>
           </div>
-        </div>
+          
+        </template>
 
         <div class="print">
           <a href="javascript:window.print()">Imprimir</a>
