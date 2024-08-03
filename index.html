@@ -120,15 +120,15 @@
           
             <table class="tabInfoMotorista">
               <tr>
-                <th colspan="8" class="descricao">Motorista</th>
+                <th colspan="2" class="tituloCentralizado">Motorista</th>
               </tr>
               <tr>
-                <td colspan="8" class="descricao">{{ invoice.Motorista.Motorista }}</td>
-                <td colspan="8" class="money">Taxa de comissão: {{ 100*invoice.Motorista.TaxaComissao }}%</td>
+                <td class="descricao">{{ invoice.Motorista.Motorista }}</td>
+                <td class="money">Taxa de comissão: {{ 100*invoice.Motorista.TaxaComissao }}%</td>
               </tr>
               <tr>
-                <td colspan="8" class="descricao">{{ invoice.Motorista.Endereco }}. {{ invoice.Motorista.Cidade }}, {{ invoice.Motorista.Estado }}. {{ invoice.Motorista.CEP }}</td>
-                <td colspan="8" class="money">Veiculo Placa: {{ invoice.Placa }}</td>
+                <td class="descricao">{{ invoice.Motorista.Endereco }}. {{ invoice.Motorista.Cidade }}, {{ invoice.Motorista.Estado }}. {{ invoice.Motorista.CEP }}</td>
+                <td class="money">Veiculo Placa: {{ invoice.Placa }}</td>
               </tr>
             </table>
 
@@ -146,7 +146,7 @@
 
             <template v-if="Array.isArray(invoice.Viagens)">
               <tr>
-                <th colspan="10" class="tituloTabela">Viagens</th>
+                <th colspan="10" class="tituloCentralizado">Viagens</th>
               </tr>
               <tr>
                 <th class="descricao">Data</th>

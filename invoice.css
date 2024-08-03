@@ -36,16 +36,6 @@ body {
   display: block;
 }
 
-.debitos {
-  padding: 1px;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  background: #4682B4;
-  -webkit-print-color-adjust: exact !important;
-  color-adjust: exact !important;
-
-}
-
 .debitos .title {
   margin-left: 2px;
   color: white;
@@ -113,10 +103,10 @@ div.summary .total, .apenas_o_total_aqui {
   font-size: 100%;
 }
 
-.motorista, .viagens, .tabInfoMotorista, .financas, .summary {
+.motorista, .debitos, .viagens, .tabInfoMotorista, .financas, .summary {
   padding: 1px;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: 12px;
+  margin-bottom: 12px;
   background: #4682B4;
   -webkit-print-color-adjust: exact !important;
   color-adjust: exact !important;
@@ -136,7 +126,7 @@ div.summary .total, .apenas_o_total_aqui {
 
 table.viagens, table.tabInfoMotorista, table.financas {
   width: 100%;
-  border: 1px solid #4682B4;
+  border: 1.5px solid #4682B4;
   border-collapse: collapse;
 }
 
@@ -158,6 +148,11 @@ table.viagens td, table.tabInfoMotorista td, table.financas td {
 .motorista .title, .summary .title, table.viagens th, table.financas th, .help .title {
   padding-top: 1px;
   padding-bottom: 1px;
+}
+
+.tituloCentralizado {
+  font-weight: bold !important;
+  text-align: center !important;
 }
 
 .descricao {
