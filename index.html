@@ -161,7 +161,7 @@
                 <th class="money">Valor<br>Liquido</th>
               </tr>
               <tr v-for="item in invoice.Viagens">
-                <td class="descricao">{{ item.Data_Carga | asDayMonth }}</td>
+                <td class="descricao">{{ item.Data_Carga | asDayBarMonth }}</td>
                 <td class="money">{{ item.Produto }}</td>
                 <td class="money">{{ item.Transportadora }}</td>
                 <td class="money">{{ item.Origem }}</td>

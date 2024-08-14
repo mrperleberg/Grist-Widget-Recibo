@@ -111,6 +111,13 @@ Vue.filter('asDayMonth', function(value) {
   const date = moment.utc(value)
   return date.isValid() ? date.format('DD MMMM') : value;
 });
+Vue.filter('asDayBarMonth', function(value) {
+  if (typeof(value) === 'number') {
+    value = new Date(value * 1000);
+  }
+  const date = moment.utc(value)
+  return date.isValid() ? date.format('DD/MM') : value;
+});
 
 function tweakUrl(url) {
   if (!url) { return url; }
